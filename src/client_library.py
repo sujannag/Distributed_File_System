@@ -1,6 +1,12 @@
 from socket import *
 import server_ports
 
+#
+#
+#
+def create_socket():
+	sock = socket(AF_INET, SOCK_STREAM)
+	return sock
 
 #
 #
@@ -23,15 +29,16 @@ def write(filename, client_id, file_ver_map):
 #
 #
 def enquire_directory_service(client_socket, file_name):
+	print ("I am here")
 	server_name = 'localhost'
-	serverPort = directory_service_port
+	server_port = server_ports.get_directory_service_port()
 	client_socket.connect((server_name, server_port))
 
 	message = "Hello! Filename:" + file_name
-	client_socket.send(msg.encode())
+	client_socket.send(message.encode())
 	reply = client_socket.recv(1024)
     
-    return reply
+	return reply
 
 #
 #
