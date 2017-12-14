@@ -7,6 +7,7 @@ def main():
 	client_library.help()
 	client_id = strftime("%Y%m%d%H%M%S", gmtime())
 	print(client_id)
+	file_ver_map = {}
 
 	while True:
 		client_input = sys.stdin.readline()
@@ -19,9 +20,12 @@ def main():
 				client_input = sys.stdin.readline()
 
 			# get the filename as given by the user
-			filename = client_input.split()[1]
-			print (filename)
-			
+			file_name = client_input.split()[1]
+			print (file_name)
+
+			resp = client_library.write(file_name, client_id, file_ver_map)
+			if resp == False:
+				print("Not able to write. Try again later!!")
 		
 		if "read" in client_input:
 
