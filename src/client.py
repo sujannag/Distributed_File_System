@@ -13,6 +13,12 @@ def main():
 		client_input = sys.stdin.readline()
 		print(client_input)
 
+		# List all the files
+		if "ls" in client_input:
+			client_directory_service_socket = client_library.create_socket()
+			client_library.enquire_directory_service(client_directory_service_socket, "", "", True)
+			client_directory_service_socket.close()
+
 		if "write_start" in client_input:
 
 			# make sure the user input is ok

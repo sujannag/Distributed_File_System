@@ -15,9 +15,10 @@ print ('!!Started Directory Service!!')
 #
 def check_file_mappings(client_message, list_files):
 
-	print (client_message)
-	file_name = client_message.split('|')[0]
-	read_write = client_message.split('|')[1]
+	# print (client_message)
+	if list_files == False:
+		file_name = client_message.split('|')[0]
+		read_write = client_message.split('|')[1]
 
 	# open the .csv file containing the file mapping
 	with open("file_map.csv",'rt') as csv_file:
@@ -71,28 +72,28 @@ def main():
 	while True:
 		connection_socket, addr = server_socket.accept()
 
-		response = ""
+		resp = ""
 		recv_msg = connection_socket.recv(1024)
 		recv_msg = recv_msg.decode()
 		print(recv_msg)
 
 		if "LIST_FILES" not in recv_msg:
 			# Do not list the files
-			response = check_file_mappings(recv_msg, False)
+			resp = check_file_mappings(recv_msg, False)
 
 		elif "LIST_FILES" in recv_msg:
 			# list the files
-			response = check_file_mappings(recv_msg, True)
+			resp = check_file_mappings(recv_msg, True)
 
-		if response is not None:
-			response = str(response)
+		if resp is not None:
+			resp = str(resp)
 			
 		else:
-			response = "NO_SUCH_FILE"
-			print("response:" + response)
+			resp = "NO_SUCH_FILE"
+			print("resp:" + resp)
 
-		print("response:" + response)
-		connection_socket.send(response.encode())
+		print("resp:" + resp)
+		connection_socket.send(resp.encode())
 		connection_socket.close()
 
 
